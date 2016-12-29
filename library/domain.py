@@ -60,7 +60,3 @@ dm.request("Domain.Info")
 dm.request("Record.List")
 然后子域名里你也可以找到你感兴趣的兴趣，比如record
 '''
-
-class Record(Dnsapi):
-    def get_ip(self):
-        return self.request()

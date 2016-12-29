@@ -32,8 +32,11 @@ def getip_138(url="http://1212.ip138.com/ic.asp"):
 def getip_taobao():
     url = "http://ip.taobao.com/service/getIpInfo2.php?ip=myip"
     data = urllib.request.urlopen(url).read().decode()
-    ip = json.loads(data)['data']['ip']
-    return ip
+    data = json.loads(data)
+    if data.get("code") == 1:
+        raise Exception(data.get('data'))
+    else:
+        return data.get('data').get('ip')
 
 
 # dd_wrt路由器可以无密码显示wan_ip

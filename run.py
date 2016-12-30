@@ -35,16 +35,21 @@ if __name__ == "__main__":
 
     i = 0
     min = 0
+    sleep_time = 20
     record = Dnsapi(**params)
     server_ip = record.get_ip()
     while True:
         local_ip,i = get_localip(i)
         if local_ip is None:
-            sleep(20) #休息60秒，进入下一轮循环
+            sleep(sleep_time) #休息60秒，进入下一轮循环
             continue
-        if min > 59:
-            server_ip = record.get_ip()
-            min = 0
+        if min = 59:
+            try:
+                server_ip = record.get_ip()
+            except Exception as e:
+                print(e)
+                sleep(sleep_time)
+                continue
         print("本地ip：%s，服务器ip：%s" %(local_ip,server_ip))
         if local_ip == server_ip:
             print("本地ip与服务器一致，无需更新")
@@ -52,4 +57,5 @@ if __name__ == "__main__":
             print("本地服务器与服务器ip不一致")
             record.update_ip(local_ip)
             serer_ip = local_ip
-        sleep(20)
+        i = (i+1) % 60
+        sleep(sleep_time)

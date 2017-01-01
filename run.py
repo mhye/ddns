@@ -13,9 +13,11 @@ params = {
     }
 
 #from params import params
-#日志初始化
+
+#logger初始化
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
+#windows平台在当前目录创建dnspod.log，linux平台在/var/log/dndpod.log
 if sys.platform.startswith("windows"):
     filename = "./dnspod.log"
 else:
@@ -60,7 +62,7 @@ if __name__ == "__main__":
 
     i = 0#本地ip查询
     min = 0#计时器60min一次循环
-    sleep_time = 20#循环持续时间
+    sleep_time = 60#循环持续时间
     record = Dnsapi(**params)
     while True:
         local_ip,i = get_localip(i,logger)
@@ -84,7 +86,13 @@ if __name__ == "__main__":
 
         else:
             logger.info("本地ip{}与服务器ip{}不一致,开始更新".format(local_ip,server_ip))
-            record.update_ip(local_ip)
+            try:
+                resault = record.update_ip(local_ip)
+            except Exception:
+                logger.exception("更新ip失败：")
+                min = 0
+                continue
+            logger.info("更新ip成功:\n{}".format(resault))
             server_ip = local_ip
             min = 0
         min = (min+1) % 60

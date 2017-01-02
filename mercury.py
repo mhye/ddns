@@ -11,10 +11,10 @@ def seurityEncode(password):
     '''
     output = ""
     start = "RDpbLfCPsJZ7fiv"
-    dic = "yLwVl0zKqws7LgKPRQ84Mdt708T1qQ3Ha7xv3H7NyU84p21BriUWBU43odz3iP4rBL3cD02KZciX\
-TysVXiV8ngg6vL48rPJyAUw0HurW20xqxv9aYb4M9wK1Ae0wlro510qXeU07kV57fQMc8L6aLgML\
-wygtc0F10a0Dg70TOoouyFhdysuRMO51yY5ZlOZZLEal1h0t9YQW0Ko7oBwmCAHoic4HYbUyVeU3\
-sfQ1xtXcPcf1aT303wAQhv66qzW"
+    dic = ("yLwVl0zKqws7LgKPRQ84Mdt708T1qQ3Ha7xv3H7NyU84p21BriUWBU43odz3iP4rBL3cD02KZciX"
+           "TysVXiV8ngg6vL48rPJyAUw0HurW20xqxv9aYb4M9wK1Ae0wlro510qXeU07kV57fQMc8L6aLgML"
+           "wygtc0F10a0Dg70TOoouyFhdysuRMO51yY5ZlOZZLEal1h0t9YQW0Ko7oBwmCAHoic4HYbUyVeU3"
+           "sfQ1xtXcPcf1aT303wAQhv66qzW")
 
     lens = max(len(start),len(password))
     for i in range(lens):
@@ -63,7 +63,7 @@ def get_wanip(url,password):
     #url
     url = url+"stok="+stok+"/ds"
     #请求参数
-    print(url)
+    #print(url)
     params2 = {"protocol":{"name":["pppoe","wan"]},"network":{"name":"wan_status"},"method":"get"}
     data = get_data(url,params2)
     ip =json.loads(data.decode()).get("network").get("wan_status").get("ipaddr")

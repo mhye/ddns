@@ -79,13 +79,13 @@ if __name__ == "__main__":
                 sleep(sleep_time)
                 continue
         if local_ip == server_ip:
-            if min < 6:
+            if min < 5:
                 logger.info("本地ip:{}与服务器ip{}一致，无需更新".format(local_ip,server_ip))
-            if min == 6:
+            if min == 5:
                 logger.info("过滤重复5次以上日志信息...")
 
         else:
-            logger.info("本地ip{}与服务器ip{}不一致,开始更新".format(local_ip,server_ip))
+            logger.info("本地ip:{} 与服务器ip {}不一致,开始更新".format(local_ip,server_ip))
             try:
                 resault = record.update_ip(local_ip)
             except Exception:

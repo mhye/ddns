@@ -24,7 +24,8 @@ else:
 file_handler = logging.handlers.RotatingFileHandler(
                             filename=filename,
                             mode='a',
-                            maxBytes=1024*1024
+                            maxBytes=1024*1024,
+                            backupCount = 10,
                             )
 file_handler.setFormatter(formatter)
 console_handler = logging.StreamHandler(sys.stdout)

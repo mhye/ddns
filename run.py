@@ -11,7 +11,6 @@ para = {
     "sub_domain":"主机名",#你的子域名 比如www.abc.com,则填"www"
     }
 #from params import  para
-data = dump_params.get_para(**para)
 
 #logger初始化
 logger = logging.getLogger(__name__)
@@ -61,8 +60,20 @@ if __name__ == "__main__":
 
     min = 0#计时器60min一次循环
     sleep_time = 60#循环持续时间
-    record = Dnsapi(**data)
 
+    #初次循环，获取record_id以及相关信息。
+    while True:
+        try:
+            data = dump_params.get_para(**para)
+        except Exception as e:
+            logger.warning("getting domain name base information failure,please check your network or para!")
+            sleep(10)
+            continue
+        else:
+            break
+
+    record = Dnsapi(**data)
+    #开始主循环
     while True:
         local_ip = get_localip(logger)
         if local_ip is None:

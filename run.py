@@ -10,8 +10,10 @@ para = {
     "domain_name":"域名",#你的域名 例如：abc.com
     "sub_domain":"主机名",#你的子域名 比如www.abc.com,则填"www"
     }
-#from params import  para
-
+try:
+    from params import  para
+except Exception as e:
+    pass
 #logger初始化
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
@@ -66,7 +68,7 @@ if __name__ == "__main__":
         try:
             data = dump_params.get_para(**para)
         except Exception as e:
-            logger.warning("getting domain name base information failure,please check your network or para!")
+            logger.exception("获取域名信息失败，请检查网络信息")
             sleep(10)
             continue
         else:
